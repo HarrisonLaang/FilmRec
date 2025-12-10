@@ -1,0 +1,143 @@
+{% extends "movie/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="container home-announcement">
+        {% if announcements %}
+            <div class="home-announcement-card">
+                <div class="home-announcement-header">
+                    <span class="home-announcement-label">Announcements</span>
+                </div>
+                <ul class="home-announcement-list">
+                    {% for a in announcements %}
+                        <li class="home-announcement-item">
+                            <div class="home-announcement-title-row">
+                                <span class="home-announcement-title">{{ a.title }}</span>
+                                <span class="home-announcement-date">
+                                    {{ a.created_at|date:"Y-m-d" }}
+                                </span>
+                            </div>
+                            <p class="home-announcement-content">
+                                {{ a.content|linebreaksbr }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <!-- 顶部介绍卡片 -->
+    <section class="home-hero">
+    <div class="home-hero-left">
+        <div class="home-hero-kicker">Welcome</div>
+        <h1 class="home-hero-title">Build your personal movie watchlist</h1>
+        <p class="home-hero-subtitle">
+            Rate the movies you have already watched and we will recommend what to watch next,
+            based on users with similar tastes.
+        </p>
+        <div class="home-hero-ctas">
+            <a href="{% url 'movie:hot' %}" class="btn home-hero-btn-main">
+                Browse popular titles
+            </a>
+            <a href="{% url 'movie:tag' %}" class="btn home-hero-btn-secondary">
+                Explore by category
+            </a>
+        </div>
+    </div>
+
+    <div class="home-hero-right">
+        <div class="home-hero-step-card">
+            <div class="home-hero-step-title">How it works</div>
+            <ol class="home-hero-steps">
+                <li>Search or browse and rate at least <strong>10 movies</strong>.</li>
+                <li>We compare your ratings with thousands of others.</li>
+                <li>Get a personalised recommendation list just for you.</li>
+            </ol>
+            {% if movie_user %}
+                <a href="{% url 'movie:recommend' %}" class="home-hero-link">
+                    Go to your recommendations →
+                </a>
+            {% else %}
+                <span class="home-hero-link-muted">
+                    Sign up and start rating to unlock personalised recommendations.
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+
+    <!-- 电影列表 -->
+    <section>
+        <h2 class="section-title">Featured movies</h2>
+
+        <div class="row movie-grid">
+            {% for movie in movies %}
+                <div class="col-xs-6 col-sm-3 col-md-2">
+                    <a href="{% url 'movie:detail' movie.pk %}" class="movie-card-link">
+                        <div class="movie-card">
+                            <div class="movie-poster-wrapper">
+                                {# 用 static 生成海报路径 #}
+                                <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                                     alt="{{ movie.name }}">
+                            </div>
+                            <div class="movie-card-title">
+                                {{ movie.name }}
+                            </div>
+                            <div class="movie-card-rating">
+                                ★ {{ movie.get_score }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- 分页 -->
+    <nav class="text-center home-pagination">
+        <ul class="pagination">
+            {# previous page #}
+            {% if page_obj.has_previous %}
+                <li><a href="{% url 'movie:index' %}?p={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+                <li class="disabled"><a href="javascript:void(0);">Previous</a></li>
+            {% endif %}
+
+            {% if left_has_more %}
+                <li><a href="{% url 'movie:index' %}?p=1">1</a></li>
+                <li><a href="javascript:void(0)">...</a></li>
+            {% endif %}
+
+            {% for left_page in left_pages %}
+                <li><a href="{% url 'movie:index' %}?p={{ left_page }}">{{ left_page }}</a></li>
+            {% endfor %}
+
+            <li class="active"><a href="javascript:void(0);">{{ current_page }}</a></li>
+
+            {% for right_page in right_pages %}
+                <li><a href="{% url 'movie:index' %}?p={{ right_page }}">{{ right_page }}</a></li>
+            {% endfor %}
+
+            {% if right_has_more %}
+                <li><a href="javascript:void(0)">...</a></li>
+                <li><a href="{% url 'movie:index' %}?p={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+            {% endif %}
+
+            {# next page #}
+            {% if page_obj.has_next %}
+                <li><a href="{% url 'movie:index' %}?p={{ page_obj.next_page_number }}">Next</a></li>
+            {% else %}
+                <li class="disabled"><a href="javascript:void(0);">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>
+{% endblock %}

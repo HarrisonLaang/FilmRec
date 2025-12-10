@@ -1,0 +1,255 @@
+{% extends 'movie/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    /* 页面整体 */
+    .recommend-page {
+        margin-top: 80px;
+        margin-bottom: 40px;
+        color: #e5e7eb;
+    }
+
+    /* 顶部说明区域 */
+    .recommend-hero {
+        padding: 22px 28px;
+        border-radius: 18px;
+        background: radial-gradient(circle at top left, #3b82f6 0, #020617 55%);
+        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.7);
+        margin-bottom: 28px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .recommend-hero-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 6px;
+        color: #f9fafb;
+    }
+
+    .recommend-hero-subtitle {
+        margin: 0;
+        font-size: 14px;
+        color: #e5e7eb;
+        opacity: 0.9;
+    }
+
+    .recommend-hero-badges {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .hero-badge {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(248, 250, 252, 0.3);
+        color: #e5e7eb;
+        background: rgba(15, 23, 42, 0.35);
+    }
+
+    /* 推荐列表整体 */
+    .recommend-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .recommend-item {
+        margin-bottom: 16px;
+    }
+
+    .recommend-rank {
+        width: 46px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        color: #facc15;
+        margin-right: 10px;
+        margin-top: 32px;
+        flex-shrink: 0;
+    }
+
+    .recommend-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .recommend-card {
+        display: flex;
+        align-items: flex-start;
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: #020617;
+        border: 1px solid rgba(30, 64, 175, 0.45);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.75);
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease,
+                    background 0.18s ease;
+    }
+
+    .recommend-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.95);
+        border-color: #facc15;
+        background: radial-gradient(circle at top left, rgba(250, 204, 21, 0.12), #020617 55%);
+    }
+
+    .recommend-poster img {
+        width: 110px;
+        border-radius: 12px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
+    }
+
+    .recommend-info {
+        flex: 1;
+        margin-left: 18px;
+    }
+
+    .recommend-title {
+        font-size: 17px;
+        font-weight: 600;
+        margin: 0 0 4px;
+        color: #f9fafb;
+    }
+
+    .recommend-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+        font-size: 13px;
+    }
+
+    .recommend-score {
+        padding: 2px 9px;
+        border-radius: 999px;
+        background: rgba(250, 204, 21, 0.14);
+        color: #facc15;
+        font-weight: 600;
+    }
+
+    .genre-pill {
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.55);
+        font-size: 12px;
+        color: #e5e7eb;
+        text-decoration: none;
+        background: rgba(15, 23, 42, 0.7);
+    }
+
+    .genre-pill:hover {
+        background: rgba(148, 163, 184, 0.2);
+        border-color: rgba(248, 250, 252, 0.8);
+        color: #f9fafb;
+    }
+
+    .recommend-intro {
+        margin-top: 4px;
+        margin-bottom: 0;
+        font-size: 13px;
+        color: #9ca3af;
+        line-height: 1.5;
+        max-height: 3.0em;           /* 约两行 */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .recommend-empty {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 15px;
+        color: #9ca3af;
+    }
+
+    /* 响应式：窄屏下卡片纵向排布 */
+    @media (max-width: 768px) {
+        .recommend-card {
+            flex-direction: row;
+        }
+
+        .recommend-poster img {
+            width: 80px;
+        }
+
+        .recommend-rank {
+            margin-top: 16px;
+            font-size: 16px;
+        }
+
+        .recommend-title {
+            font-size: 15px;
+        }
+    }
+</style>
+
+<div class="container recommend-page">
+
+    <!-- 顶部说明 -->
+    <section class="recommend-hero">
+        <h1 class="recommend-hero-title">Recommended for you</h1>
+        <p class="recommend-hero-subtitle">
+            These titles are generated from your rating history. Click a card to open
+            the movie detail page and update your rating or review.
+        </p>
+        <div class="recommend-hero-badges">
+            <span class="hero-badge">
+                Top {{ movies|length }} picks
+            </span>
+            <span class="hero-badge">
+                Personalised recommendations
+            </span>
+        </div>
+    </section>
+
+    {% if movies %}
+        <ol class="recommend-list">
+            {% for movie in movies %}
+                <li class="recommend-item">
+                    <div style="display: flex;">
+                        <div class="recommend-rank">#{{ forloop.counter }}</div>
+
+                        <a href="{% url 'movie:detail' movie.pk %}" class="recommend-card-link">
+                            <div class="recommend-card">
+                                <div class="recommend-poster">
+                                    <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                                         alt="{{ movie.name }}">
+                                </div>
+
+                                <div class="recommend-info">
+                                    <h2 class="recommend-title">{{ movie.name }}</h2>
+
+                                    <div class="recommend-meta">
+                                        <span class="recommend-score">★ {{ movie.get_score }}</span>
+
+                                        {% for genre in movie.get_genre %}
+                                            <a href="{% url 'movie:tag' %}?genre={{ genre }}"
+                                               class="genre-pill">
+                                                {{ genre }}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+
+                                    <p class="recommend-intro">
+                                        {{ movie.intro|default:"No overview available yet." }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p class="recommend-empty">
+            We need a few more ratings before we can generate personalised
+            recommendations for you.
+        </p>
+    {% endif %}
+</div>
+
+{% endblock %}

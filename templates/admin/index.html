@@ -1,0 +1,302 @@
+{# templates/admin/index.html #}
+{% extends "admin/base_site.html" %}
+{% load i18n static movie_admin_extras %}
+
+{% block content %}
+<div id="dashboard">
+
+    <!-- 顶部标题区 -->
+    <div class="dashboard-header">
+        <h1>Movie Management Dashboard</h1>
+        <p class="dashboard-subtitle">
+            Overview of your movie catalog, front-end users and ratings.
+        </p>
+    </div>
+
+    <!-- 统计卡片区：总电影数 / 总用户数 / 总评分数 -->
+    <div class="dashboard-metrics">
+        <div class="metric-card">
+            <div class="metric-label">Total Movies</div>
+            <div class="metric-value">{% total_movies %}</div>
+            <div class="metric-desc">Movies currently in the catalog.</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Front-end Users</div>
+            <div class="metric-value">{% total_front_users %}</div>
+            <div class="metric-desc">Registered users of the movie site.</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Ratings</div>
+            <div class="metric-value">{% total_ratings %}</div>
+            <div class="metric-desc">User rating records stored in the system.</div>
+        </div>
+    </div>
+
+    <!-- 电影相关模型管理区 -->
+    <div class="dashboard-section">
+        <h2>Movie Data Management</h2>
+        <p class="section-desc">
+            Manage movies, genres, similarities, ratings and popularity.
+        </p>
+
+        <div class="model-grid">
+            {# 只展示 movie 这个 app 下的模型 #}
+            {% for app in app_list %}
+                {% if app.app_label == "movie" %}
+                    {% for model in app.models %}
+                        {% if model.perms.change %}
+                            <a href="{{ model.admin_url }}" class="model-card">
+                                <span class="model-name">{{ model.name }}</span>
+                                <span class="model-actions">
+                                    {% if model.perms.add %}
+                                        <span class="action-pill">+ Add</span>
+                                    {% endif %}
+                                    <span class="action-pill">Manage</span>
+                                </span>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 权限相关区：auth app -->
+    <div class="dashboard-section secondary">
+        <h2>System & Access Control</h2>
+        <p class="section-desc">
+            Maintain administrator accounts and permissions.
+        </p>
+
+        <div class="model-grid">
+            {% for app in app_list %}
+                {% if app.app_label == "auth" %}
+                    {% for model in app.models %}
+                        {% if model.perms.change %}
+                            <a href="{{ model.admin_url }}" class="model-card small">
+                                <span class="model-name">{{ model.name }}</span>
+                                <span class="model-actions">
+                                    <span class="action-pill">Manage</span>
+                                </span>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+        <!-- DATA OVERVIEW WITH CHARTS -->
+    <div class="dashboard-section">
+    <h2>Data Overview</h2>
+    <p class="section-desc">
+        Visual summary of ratings, genres and release years.
+    </p>
+
+    <div class="chart-grid">
+        <div class="chart-card">
+            <h3>Rating Distribution</h3>
+            <canvas id="ratingChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Top Genres by Movie Count</h3>
+            <canvas id="genreChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Movies by Release Year</h3>
+            <canvas id="yearChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>Average Rating by Genre</h3>
+            <canvas id="genreRadarChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+        {# ==== Charts script ==== #}
+    {% rating_score_stats as rating_stats %}
+    {% genre_movie_stats as genre_stats %}
+    {% movies_by_year_stats as movie_year_stats %}
+    {% genre_avg_rating_stats as genre_avg_stats %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    (function () {
+        const ratingData    = JSON.parse('{{ rating_stats|escapejs }}');
+        const genreData     = JSON.parse('{{ genre_stats|escapejs }}');
+        const yearData      = JSON.parse('{{ movie_year_stats|escapejs }}');
+        const avgGenreData  = JSON.parse('{{ genre_avg_stats|escapejs }}');
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ===== Chart 1: Rating Distribution (bar) =====
+            const ratingCtx = document.getElementById('ratingChart');
+            if (ratingCtx && ratingData.labels.length > 0) {
+                new Chart(ratingCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ratingData.labels,
+                        datasets: [{
+                            label: 'Number of ratings',
+                            data: ratingData.counts,
+                            backgroundColor: 'rgba(45, 169, 255, 0.7)',
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { mode: 'index', intersect: false }
+                        },
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Score' },
+                                ticks: { color: '#f5f5f7' },
+                                grid: { color: 'rgba(255,255,255,0.05)' }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Count' },
+                                ticks: { color: '#f5f5f7' },
+                                grid: { color: 'rgba(255,255,255,0.06)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // ===== Chart 2: Top Genres by Movie Count (horizontal bar) =====
+            const genreCtx = document.getElementById('genreChart');
+            if (genreCtx && genreData.labels.length > 0) {
+                new Chart(genreCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: genreData.labels,
+                        datasets: [{
+                            label: 'Movies',
+                            data: genreData.counts,
+                            backgroundColor: 'rgba(103, 230, 180, 0.7)',
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { mode: 'index', intersect: false }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Movies' },
+                                ticks: { color: '#f5f5f7' },
+                                grid: { color: 'rgba(255,255,255,0.06)' }
+                            },
+                            y: {
+                                ticks: { color: '#f5f5f7' },
+                                grid: { color: 'rgba(255,255,255,0.05)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // ===== Chart 3: Movies by Release Year (line + area) =====
+            const yearCtx = document.getElementById('yearChart');
+            if (yearCtx && yearData.labels.length > 0) {
+                new Chart(yearCtx, {
+                    type: 'line',
+                    data: {
+                        labels: yearData.labels,
+                        datasets: [{
+                            label: 'Movies',
+                            data: yearData.counts,
+                            tension: 0.25,
+                            fill: true,
+                            borderColor: '#ffb92e',
+                            backgroundColor: 'rgba(255, 185, 46, 0.2)',
+                            pointRadius: 2.5,
+                            pointHoverRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { mode: 'index', intersect: false }
+                        },
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Release year' },
+                                ticks: { color: '#f5f5f7', maxTicksLimit: 10 },
+                                grid: { color: 'rgba(255,255,255,0.05)' }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Movies' },
+                                ticks: { color: '#f5f5f7' },
+                                grid: { color: 'rgba(255,255,255,0.06)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // ===== Chart 4: Average Rating by Genre (radar) =====
+            const radarCtx = document.getElementById('genreRadarChart');
+            if (radarCtx && avgGenreData.labels.length > 0) {
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: avgGenreData.labels,
+                        datasets: [{
+                            label: 'Average rating',
+                            data: avgGenreData.counts,
+                            backgroundColor: 'rgba(229, 9, 20, 0.25)',
+                            borderColor: '#e50914',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#ffb92e',
+                            pointBorderColor: '#11151f',
+                            pointRadius: 3,
+                            pointHoverRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false },
+                        },
+                        scales: {
+                            r: {
+                                suggestedMin: 0,
+                                suggestedMax: 5,
+                                ticks: {
+                                    color: '#f5f5f7',
+                                    backdropColor: 'transparent'
+                                },
+                                grid: { color: 'rgba(255,255,255,0.08)' },
+                                angleLines: { color: 'rgba(255,255,255,0.08)' },
+                                pointLabels: {
+                                    color: '#f5f5f7',
+                                    font: { size: 11 }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+        });
+    })();
+</script>
+
+
+{% endblock %}

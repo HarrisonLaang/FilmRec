@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Movie Recommendation System</title>
+    <link rel="stylesheet" href="{% static 'css/splash.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="splash">
+    <div class="splash-logo">
+        <div class="spinner"></div>
+        <div class="icon">🎬</div>
+    </div>
+
+    <h1 class="splash-title">Movie Recommendation System</h1>
+    <p class="splash-subtitle">
+        Loading your personalised movie world...
+    </p>
+
+    <button class="splash-button" onclick="enterSite()">
+        Enter movie homepage
+    </button>
+
+    <p class="splash-hint">
+        You will be redirected automatically in a few seconds.
+    </p>
+</div>
+
+<script>
+    function enterSite() {
+        // 跳到你原来的电影首页
+        window.location.href = "{% url 'movie:index' %}";
+    }
+
+    // 可选：3 秒后自动跳转
+    setTimeout(enterSite, 3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+/* 整体容器 */
+.search-page {
+    padding-top: 30px;
+    padding-bottom: 40px;
+    color: #e5e7eb;
+}
+
+/* 顶部搜索结果卡片 */
+.search-header {
+    background: radial-gradient(circle at top left, #1f2937 0%, #020617 55%, #000 100%);
+    border-radius: 18px;
+    padding: 22px 26px;
+    margin-bottom: 26px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+}
+
+.search-breadcrumb {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: #9ca3af;
+    margin: 0 0 6px;
+    opacity: 0.9;
+}
+
+.search-title {
+    margin: 0 0 8px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.search-keyword {
+    color: #fbbf24;
+}
+
+.search-meta {
+    margin: 0;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+/* 结果网格里的电影卡片 */
+.movie-grid {
+    margin-top: 10px;
+}
+
+.movie-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-card {
+    background: #0b1120;
+    border-radius: 18px;
+    padding: 10px 10px 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 40px rgba(0, 0, 0, 0.85);
+    background: #111827;
+}
+
+/* 海报 */
+.movie-poster-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 150%; /* 2:3 比例 */
+    border-radius: 14px;
+    overflow: hidden;
+    background: #020617;
+    margin-bottom: 10px;
+}
+
+.movie-poster-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 文本信息 */
+.movie-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.movie-card-title {
+    font-size: 13px;
+    line-height: 1.3;
+    color: #e5e7eb;
+    min-height: 2.6em; /* 两行高度，保持整齐 */
+}
+
+.movie-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.movie-card-year {
+    opacity: 0.9;
+}
+
+.movie-card-rating {
+    color: #facc15;
+    font-weight: 500;
+}
+
+/* 空状态 */
+.search-empty-state {
+    margin-top: 40px;
+    padding: 50px 40px;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.96);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+}
+
+.search-empty-state h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #f9fafb;
+}
+
+.search-empty-state p {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* 分页按钮暗色风格 */
+.search-pagination {
+    margin-top: 20px;
+}
+
+.search-pagination .pagination > li > a,
+.search-pagination .pagination > li > span {
+    background-color: #020617;
+    border-color: #1f2937;
+    color: #e5e7eb;
+    padding: 6px 12px;
+}
+
+.search-pagination .pagination > li > a:hover {
+    background-color: #111827;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+.search-pagination .pagination > .active > a,
+.search-pagination .pagination > .active > span,
+.search-pagination .pagination > .active > a:hover,
+.search-pagination .pagination > .active > span:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+.search-pagination .pagination > .disabled > span,
+.search-pagination .pagination > .disabled > span:hover,
+.search-pagination .pagination > .disabled > a,
+.search-pagination .pagination > .disabled > a:hover {
+    background-color: #020617;
+    border-color: #111827;
+    color: #4b5563;
+}

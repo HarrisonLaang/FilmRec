@@ -1,0 +1,136 @@
+{% extends 'movie/base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+<div class="container search-page">
+
+    <!-- 顶部搜索结果卡片 -->
+    <section class="search-header">
+        <p class="search-breadcrumb">Search results</p>
+
+        {% if page_obj.paginator.count %}
+            <h1 class="search-title">
+                Results for <span class="search-keyword">“{{ keyword }}”</span>
+            </h1>
+            <p class="search-meta">
+                Found <strong>{{ page_obj.paginator.count }}</strong> movies ·
+                Page <strong>{{ current_page }}</strong> of <strong>{{ paginator.num_pages }}</strong>.
+            </p>
+        {% else %}
+            <h1 class="search-title">
+                No matches for <span class="search-keyword">“{{ keyword }}”</span>
+            </h1>
+            <p class="search-meta">
+                We couldn’t find any movies for this search. Try another title, director or keyword.
+            </p>
+        {% endif %}
+    </section>
+
+    {% if page_obj.paginator.count %}
+        <!-- 结果网格 -->
+        <div class="row movie-grid">
+            {% for movie in movies %}
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                    <a href="{% url 'movie:detail' movie.pk %}" class="movie-card-link">
+                        <div class="movie-card">
+                            <div class="movie-poster-wrapper">
+                                <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                                     alt="{{ movie.name }}">
+                            </div>
+
+                            <div class="movie-card-info">
+                                <div class="movie-card-title">
+                                    {{ movie.name }}
+                                </div>
+                                <div class="movie-card-meta">
+                                    <span class="movie-card-year">
+                                        {% if movie.release_time %}
+                                            {{ movie.release_time|slice:"-4:" }}
+                                        {% endif %}
+                                    </span>
+                                    <span class="movie-card-rating">
+                                        ★ {{ movie.get_score }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- 没有结果时的空状态 -->
+        <div class="search-empty-state">
+            <h2>No movies found</h2>
+            <p>
+                We couldn’t find any movies matching
+                <span class="search-keyword">“{{ keyword }}”</span>.
+                Try searching for another title, actor, director or keyword.
+            </p>
+        </div>
+    {% endif %}
+
+    <!-- 分页 -->
+    {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="text-center search-pagination">
+            <ul class="pagination">
+
+                {# Previous #}
+                {% if page_obj.has_previous %}
+                    <li>
+                        <a href="?keyword={{ keyword }}&p={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="disabled"><a href="javascript:void(0);">Previous</a></li>
+                {% endif %}
+
+                {# 左侧 ... #}
+                {% if left_has_more %}
+                    <li><a href="?keyword={{ keyword }}&p=1">1</a></li>
+                    <li class="disabled"><a href="javascript:void(0);">…</a></li>
+                {% endif %}
+
+                {# 左侧页码 #}
+                {% for left_page in left_pages %}
+                    <li>
+                        <a href="?keyword={{ keyword }}&p={{ left_page }}">{{ left_page }}</a>
+                    </li>
+                {% endfor %}
+
+                {# 当前页 #}
+                <li class="active">
+                    <a href="javascript:void(0);">{{ current_page }}</a>
+                </li>
+
+                {# 右侧页码 #}
+                {% for right_page in right_pages %}
+                    <li>
+                        <a href="?keyword={{ keyword }}&p={{ right_page }}">{{ right_page }}</a>
+                    </li>
+                {% endfor %}
+
+                {# 右侧 ... #}
+                {% if right_has_more %}
+                    <li class="disabled"><a href="javascript:void(0);">…</a></li>
+                    <li>
+                        <a href="?keyword={{ keyword }}&p={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+                    </li>
+                {% endif %}
+
+                {# Next #}
+                {% if page_obj.has_next %}
+                    <li>
+                        <a href="?keyword={{ keyword }}&p={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="disabled"><a href="javascript:void(0);">Next</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+
+</div>
+{% endblock %}

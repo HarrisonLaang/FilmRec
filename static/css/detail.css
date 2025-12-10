@@ -1,0 +1,339 @@
+/* ===== Movie detail page ===== */
+
+.detail-page {
+    margin-top: 40px;
+    margin-bottom: 60px;
+    color: #f5f5f5;
+}
+
+/* 顶部大卡片：海报 + 主要信息 + 右侧评分卡片 */
+.detail-hero {
+    background: linear-gradient(135deg, #1b2138 0%, #0b0d15 55%, #05060b 100%);
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    gap: 28px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* 左边：海报 + 文本信息组合 */
+.detail-hero-left {
+    display: flex;
+    flex: 1;
+    gap: 24px;
+}
+
+/* 海报 */
+.detail-poster-large {
+    flex: 0 0 220px;
+    max-width: 220px;
+}
+
+.detail-poster-large img {
+    width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+    object-fit: cover;
+}
+
+/* 右侧：电影文字信息 */
+.detail-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 顶部小徽标 */
+.detail-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.06);
+    color: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+/* 标题 */
+.detail-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+/* 评分 + 年份 + 时长 */
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #b4bed2;
+}
+
+.detail-score-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f5c518;
+    color: #111;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.detail-score-pill span.star {
+    margin-right: 4px;
+}
+
+.detail-hearts {
+    color: #ff6b81;
+    font-size: 14px;
+}
+
+/* 类型标签 */
+.detail-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.detail-genre-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #d5def5;
+    font-size: 12px;
+}
+
+/* 简介 */
+.detail-intro {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #d0d4e6;
+    margin-bottom: 16px;
+}
+
+/* 导演 / 编剧 / 主演信息 */
+.detail-credits {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    font-size: 13px;
+}
+
+.detail-credits-row {
+    display: flex;
+    gap: 8px;
+}
+
+.detail-credits-label {
+    min-width: 70px;
+    color: #8c96b5;
+}
+
+.detail-credits-value {
+    color: #e5e9ff;
+}
+
+/* 右侧：评分卡片 */
+.detail-hero-side {
+    flex: 0 0 260px;
+    max-width: 260px;
+    background: #10131f;
+    border-radius: 20px;
+    padding: 18px 20px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.detail-rating-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.detail-rating-subtitle {
+    font-size: 12px;
+    color: #9aa4c3;
+    margin-bottom: 10px;
+}
+
+.detail-rating-average {
+    font-size: 30px;
+    font-weight: 700;
+    color: #f5c518;
+    line-height: 1;
+}
+
+.detail-rating-average-label {
+    font-size: 12px;
+    color: #9aa4c3;
+}
+
+.detail-rating-form {
+    margin-top: 12px;
+}
+
+.detail-rating-form textarea.form-control {
+    background-color: #070812;
+    border-color: #252941;
+    color: #f5f5f5;
+}
+
+.detail-rating-form textarea.form-control:focus {
+    border-color: #4c6fff;
+    box-shadow: 0 0 0 1px #4c6fff;
+}
+
+/* 底部按钮区域 */
+.detail-rating-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.detail-login-hint {
+    font-size: 12px;
+    color: #9aa4c3;
+    margin-top: 8px;
+}
+
+/* ===== 通用 section ===== */
+
+.detail-section {
+    margin-top: 40px;
+}
+
+.detail-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+}
+
+.detail-section-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.detail-section-subtitle {
+    font-size: 13px;
+    color: #9aa4c3;
+}
+
+/* 相似电影：横向滚动卡片 */
+.detail-recommendations {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.detail-recommendations::-webkit-scrollbar {
+    height: 6px;
+}
+.detail-recommendations::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+}
+
+/* 推荐卡片 */
+.detail-rec-card {
+    flex: 0 0 160px;
+    background: #10131f;
+    border-radius: 16px;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.75);
+    transition: transform 0.18s ease, box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.detail-rec-card:hover {
+    transform: translateY(-4px);
+    background: #181c2d;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.85);
+}
+
+.detail-rec-poster-wrapper {
+    width: 100%;
+    height: 230px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.detail-rec-poster-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-rec-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #f5f5f5;
+    margin-bottom: 4px;
+}
+
+.detail-rec-rating {
+    font-size: 12px;
+    color: #f5c518;
+}
+
+/* “暂无推荐” 文本 */
+.detail-empty {
+    font-size: 13px;
+    color: #9aa4c3;
+}
+
+/* ===== 消息提示 ===== */
+
+.detail-messages {
+    margin-top: 24px;
+}
+
+.detail-messages .alert-info {
+    background: rgba(52, 152, 219, 0.08);
+    border-color: rgba(52, 152, 219, 0.4);
+    color: #c9e4ff;
+}
+
+/* ===== 响应式 ===== */
+
+@media (max-width: 992px) {
+    .detail-hero {
+        flex-direction: column;
+        padding: 24px;
+    }
+
+    .detail-hero-side {
+        max-width: none;
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-hero-left {
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+    }
+
+    .detail-poster-large {
+        max-width: 190px;
+    }
+
+    .detail-title {
+        font-size: 22px;
+    }
+}

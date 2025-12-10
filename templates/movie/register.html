@@ -1,0 +1,193 @@
+{% extends "movie/base.html" %}
+
+{% block extra_css %}
+<style>
+    .auth-page {
+        min-height: calc(100vh - 60px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 16px;
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: radial-gradient(circle at top, #202637 0, #050509 65%);
+        border-radius: 18px;
+        padding: 32px 28px 30px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .auth-title {
+        font-size: 26px;
+        font-weight: 600;
+        color: #f5f5f7;
+        margin-bottom: 6px;
+    }
+
+    .auth-subtitle {
+        font-size: 13px;
+        color: #9ca3af;
+        margin-bottom: 20px;
+    }
+
+    .auth-form-group {
+        margin-bottom: 16px;
+    }
+
+    .auth-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #e5e7eb;
+        margin-bottom: 6px;
+    }
+
+    .auth-input {
+        background-color: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        border-radius: 10px;
+        padding: 10px 12px;
+        width: 100%;
+        color: #f9fafb;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    .auth-input:focus {
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.45);
+        background-color: rgba(15, 23, 42, 1);
+    }
+
+    .auth-input::placeholder {
+        color: #6b7280;
+    }
+
+    .auth-errors {
+        margin-top: 4px;
+        font-size: 12px;
+        color: #f97373;
+    }
+
+    .auth-global-errors {
+        margin-bottom: 12px;
+        font-size: 13px;
+    }
+
+    .auth-submit-btn {
+        margin-top: 6px;
+        width: 100%;
+        border-radius: 999px;
+        padding: 10px 0;
+        font-size: 15px;
+        font-weight: 500;
+        border: none;
+        background: linear-gradient(135deg, #2563eb, #38bdf8);
+        color: #f9fafb;
+        transition: transform 0.08s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    .auth-submit-btn:hover {
+        filter: brightness(1.05);
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+        transform: translateY(-1px);
+    }
+
+    .auth-submit-btn:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+
+    .auth-footer {
+        margin-top: 14px;
+        font-size: 13px;
+        color: #9ca3af;
+        text-align: center;
+    }
+
+    .auth-footer a {
+        color: #38bdf8;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle">
+            Sign up to rate movies and get personalised recommendations.
+        </p>
+
+        {# 全局 messages（比如“username already exists”等） #}
+        {% if messages %}
+            <div class="alert alert-info auth-global-errors">
+                {% for message in messages %}
+                    {{ message }}
+                    {% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="auth-form-group">
+                <label for="id_name" class="auth-label">Username</label>
+                <input type="text"
+                       id="id_name"
+                       name="name"
+                       class="auth-input"
+                       placeholder="Choose a username"
+                       value="{{ request.POST.name|default_if_none:'' }}">
+            </div>
+
+            <div class="auth-form-group">
+                <label for="id_email" class="auth-label">Email</label>
+                <input type="email"
+                       id="id_email"
+                       name="email"
+                       class="auth-input"
+                       placeholder="you@example.com"
+                       value="{{ request.POST.email|default_if_none:'' }}">
+            </div>
+
+            <div class="auth-form-group">
+                <label for="id_password" class="auth-label">Password</label>
+                <input type="password"
+                       id="id_password"
+                       name="password"
+                       class="auth-input"
+                       placeholder="Enter a strong password">
+            </div>
+
+            <div class="auth-form-group">
+                <label for="id_password2" class="auth-label">Confirm password</label>
+                <input type="password"
+                       id="id_password2"
+                       name="password_repeat"
+                       class="auth-input"
+                       placeholder="Repeat your password">
+            </div>
+
+            <button type="submit" class="auth-submit-btn">
+                Sign up
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="{% url 'movie:login' %}">Log in</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

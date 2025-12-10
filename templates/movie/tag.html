@@ -1,0 +1,307 @@
+{% extends 'movie/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/category.css' %}">
+</head>
+<div class="container category-page">
+
+    <!-- 顶部标题区 -->
+    <section class="category-header">
+        <div class="category-header-left">
+            <h1 class="category-title">Browse by genre</h1>
+
+            {% if genre %}
+                <p class="category-subtitle">
+                    Showing <span>{{ movies|length }}</span> movies in
+                    <span class="category-highlight">{{ genre }}</span>.
+                </p>
+            {% else %}
+                <p class="category-subtitle">
+                    Select a genre on the left to see its movies.
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="category-header-right">
+            <span class="category-sort-label">Sort by</span>
+        
+            <a href="?{% if genre %}genre={{ genre }}&{% endif %}sort=rating"
+               class="category-sort-pill {% if sort == 'rating' or not sort %}category-sort-pill-active{% endif %}">
+                Rating
+            </a>
+        
+            <a href="?{% if genre %}genre={{ genre }}&{% endif %}sort=title"
+               class="category-sort-pill {% if sort == 'title' %}category-sort-pill-active{% endif %}">
+                Title
+            </a>
+        
+            <a href="?{% if genre %}genre={{ genre }}&{% endif %}sort=year"
+               class="category-sort-pill {% if sort == 'year' %}category-sort-pill-active{% endif %}">
+                Year
+            </a>
+        </div>
+    
+    </section>
+
+    <!-- 主布局：左侧类型，右侧电影网格 -->
+    <section class="category-layout">
+
+        <!-- 左侧：类型列表（用你原来那堆硬编码的类型） -->
+        <aside class="category-sidebar">
+            <div class="category-sidebar-title">Genres</div>
+            <ul class="category-genre-list">
+
+                <li>
+                    <a href="{% url 'movie:tag' %}"
+                       class="category-genre-link {% if not genre %}is-active{% endif %}">
+                        All
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Musical"
+                       class="category-genre-link {% if genre == 'Musical' %}is-active{% endif %}">
+                        Musical
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=War"
+                       class="category-genre-link {% if genre == 'War' %}is-active{% endif %}">
+                        War
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Crime"
+                       class="category-genre-link {% if genre == 'Crime' %}is-active{% endif %}">
+                        Crime
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Romance"
+                       class="category-genre-link {% if genre == 'Romance' %}is-active{% endif %}">
+                        Romance
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Fantasy"
+                       class="category-genre-link {% if genre == 'Fantasy' %}is-active{% endif %}">
+                        Fantasy
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Drama"
+                       class="category-genre-link {% if genre == 'Drama' %}is-active{% endif %}">
+                        Drama
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Music"
+                       class="category-genre-link {% if genre == 'Music' %}is-active{% endif %}">
+                        Music
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Sci-Fi"
+                       class="category-genre-link {% if genre == 'Sci-Fi' %}is-active{% endif %}">
+                        Sci-Fi
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Action"
+                       class="category-genre-link {% if genre == 'Action' %}is-active{% endif %}">
+                        Action
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Comedy"
+                       class="category-genre-link {% if genre == 'Comedy' %}is-active{% endif %}">
+                        Comedy
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Biography"
+                       class="category-genre-link {% if genre == 'Biography' %}is-active{% endif %}">
+                        Biography
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Family"
+                       class="category-genre-link {% if genre == 'Family' %}is-active{% endif %}">
+                        Family
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Horror"
+                       class="category-genre-link {% if genre == 'Horror' %}is-active{% endif %}">
+                        Horror
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Short"
+                       class="category-genre-link {% if genre == 'Short' %}is-active{% endif %}">
+                        Short
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Documentary"
+                       class="category-genre-link {% if genre == 'Documentary' %}is-active{% endif %}">
+                        Documentary
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Film-Noir"
+                       class="category-genre-link {% if genre == 'Film-Noir' %}is-active{% endif %}">
+                        Film-Noir
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Animation"
+                       class="category-genre-link {% if genre == 'Animation' %}is-active{% endif %}">
+                        Animation
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Adventure"
+                       class="category-genre-link {% if genre == 'Adventure' %}is-active{% endif %}">
+                        Adventure
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Mystery"
+                       class="category-genre-link {% if genre == 'Mystery' %}is-active{% endif %}">
+                        Mystery
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=News"
+                       class="category-genre-link {% if genre == 'News' %}is-active{% endif %}">
+                        News
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Sport"
+                       class="category-genre-link {% if genre == 'Sport' %}is-active{% endif %}">
+                        Sport
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=History"
+                       class="category-genre-link {% if genre == 'History' %}is-active{% endif %}">
+                        History
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Thriller"
+                       class="category-genre-link {% if genre == 'Thriller' %}is-active{% endif %}">
+                        Thriller
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'movie:tag' %}?genre=Western"
+                       class="category-genre-link {% if genre == 'Western' %}is-active{% endif %}">
+                        Western
+                    </a>
+                </li>
+
+            </ul>
+        </aside>
+
+        <!-- 右侧：当前类型电影 -->
+        <main class="category-main">
+            {% if genre %}
+                <h2 class="category-main-title">{{ genre }}</h2>
+            {% else %}
+                <h2 class="category-main-title">All genres</h2>
+            {% endif %}
+
+        <div class="movie-grid">
+            {% for movie in movies %}
+                <div class="movie-card-wrapper">
+                    <a href="{% url 'movie:detail' movie.pk %}" class="movie-card-link">
+                        <div class="movie-card">
+                            <div class="movie-poster-wrapper">
+                                <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                                     alt="{{ movie.name }}">
+                            </div>
+                            <div class="movie-card-title">
+                                {{ movie.name }}
+                            </div>
+                            <div class="movie-card-rating">
+                                ★ {{ movie.get_score }}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <p class="category-empty">
+                    No movies found for this genre yet.
+                </p>
+            {% endfor %}
+        </div>
+            
+
+            <!-- 分页：用你原来的逻辑，但 URL 用 ?p=xxx 就可以 -->
+            <nav class="text-center home-pagination">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?{% if genre %}genre={{ genre }}&{% endif %}p={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% else %}
+                        <li class="disabled"><a href="javascript:void(0);">Previous</a></li>
+                    {% endif %}
+
+                    {% if left_has_more %}
+                        <li><a href="?{% if genre %}genre={{ genre }}&{% endif %}p=1">1</a></li>
+                        <li><a href="javascript:void(0);">...</a></li>
+                    {% endif %}
+
+                    {% for left_page in left_pages %}
+                        <li><a href="?{% if genre %}genre={{ genre }}&{% endif %}p={{ left_page }}">{{ left_page }}</a></li>
+                    {% endfor %}
+
+                    <li class="active"><a href="javascript:void(0);">{{ current_page }}</a></li>
+
+                    {% for right_page in right_pages %}
+                        <li><a href="?{% if genre %}genre={{ genre }}&{% endif %}p={{ right_page }}">{{ right_page }}</a></li>
+                    {% endfor %}
+
+                    {% if right_has_more %}
+                        <li><a href="javascript:void(0);">...</a></li>
+                        <li><a href="?{% if genre %}genre={{ genre }}&{% endif %}p={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                        <li><a href="?{% if genre %}genre={{ genre }}&{% endif %}p={{ page_obj.next_page_number }}">Next</a></li>
+                    {% else %}
+                        <li class="disabled"><a href="javascript:void(0);">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </main>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}Movie Recommendation Admin{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'admin/css/movie_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            🎬 Movie Recommendation Admin
+        </a>
+    </h1>
+    <span class="admin-tagline">
+        Manage movies, users and ratings in one place.
+    </span>
+{% endblock %}
+
+{# 覆盖右上角的链接：View site / Change password / Log out #}
+{% block userlinks %}
+    <a href="{% url 'movie:index' %}">View site</a> /
+    <a href="{% url 'admin:password_change' %}">Change password</a> /
+    <a href="{% url 'movie:logout' %}">Log out</a>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -1,0 +1,975 @@
+/* 页面整体背景 & 字体 */
+.movie-body {
+    background-color: #05060b;
+    color: #f5f5f7;
+    padding-top: 0;  /* 给 fixed navbar 腾空间 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 页面主体容器 */
+.movie-page {
+    padding: 70px 0 40px 0;
+}
+
+/* 首页上方的介绍卡片 */
+/* Hero 区域整体布局 */
+.home-hero {
+    max-width: 1100px;
+    margin: 0 auto 26px auto;
+    padding: 26px 32px;
+    border-radius: 24px;
+    background: radial-gradient(circle at top left, #1c2235, #05060b);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.home-hero-left {
+    flex: 3;
+    min-width: 0;
+}
+
+.home-hero-right {
+    flex: 2;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* 左侧文字部分 */
+.home-hero-kicker {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(245, 245, 247, 0.7);
+    margin-bottom: 6px;
+}
+
+.home-hero-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.home-hero-subtitle {
+    font-size: 14px;
+    color: rgba(245, 245, 247, 0.82);
+    margin-bottom: 16px;
+}
+
+.home-hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* 主按钮 / 次按钮 */
+.home-hero-btn-main {
+    border-radius: 999px;
+    padding: 8px 20px;
+    border: none;
+    background: linear-gradient(135deg, #e50914, #ff6a4d);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.home-hero-btn-main:hover {
+    background: linear-gradient(135deg, #ff3f3f, #ff8c5a);
+    color: #ffffff;
+}
+
+.home-hero-btn-secondary {
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: #ffb92e;
+    background: transparent;
+    border: 1px solid rgba(255, 185, 46, 0.6);
+}
+
+.home-hero-btn-secondary:hover {
+    color: #05060b;
+    background-color: #ffb92e;
+    text-decoration: none;
+}
+
+/* 右侧步骤卡片 */
+.home-hero-step-card {
+    background: rgba(3, 6, 20, 0.9);
+    border-radius: 18px;
+    padding: 14px 16px;
+    border: 1px solid rgba(90, 99, 140, 0.6);
+    font-size: 12px;
+    color: rgba(245, 245, 247, 0.8);
+}
+
+.home-hero-step-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 6px;
+    color: rgba(245, 245, 247, 0.7);
+}
+
+.home-hero-steps {
+    padding-left: 18px;
+    margin: 0 0 6px 0;
+}
+
+.home-hero-steps li {
+    margin-bottom: 4px;
+}
+
+.home-hero-link,
+.home-hero-link-muted {
+    font-size: 11px;
+}
+
+.home-hero-link {
+    color: #ffb92e;
+}
+
+.home-hero-link:hover {
+    color: #ffd36b;
+    text-decoration: none;
+}
+
+.home-hero-link-muted {
+    color: rgba(245, 245, 247, 0.6);
+}
+
+/* 小屏幕适配 */
+@media (max-width: 768px) {
+    .home-hero {
+        flex-direction: column;
+        padding: 20px 18px;
+        gap: 18px;
+    }
+
+    .home-hero-title {
+        font-size: 22px;
+    }
+}
+
+/* Popular page header */
+.popular-header {
+    max-width: 1000px;
+    margin: 0 auto 8px auto;
+}
+
+.popular-title {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.popular-subtitle {
+    font-size: 13px;
+    color: rgba(245, 245, 247, 0.75);
+}
+
+/* Legend pills */
+.popular-legend {
+    max-width: 1000px;
+    margin: 0 auto 16px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.popular-pill {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid #3a425a;
+    color: rgba(245, 245, 247, 0.8);
+    background-color: #090b14;
+}
+
+.popular-pill-top3 {
+    border-color: #ffb92e;
+    color: #ffb92e;
+}
+
+/* Grid */
+.popular-grid {
+    margin-top: 6px;
+}
+
+/* Popular card */
+.popular-card {
+    position: relative;
+    background-color: #11151f;
+    border-radius: 16px;
+    padding: 10px 10px 12px 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.popular-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+}
+
+/* 排名角标 */
+.popular-rank-badge {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    background: rgba(5, 6, 11, 0.85);
+    color: rgba(245, 245, 247, 0.8);
+    border: 1px solid rgba(90, 99, 140, 0.6);
+}
+
+.popular-rank-top {
+    background: linear-gradient(135deg, #e50914, #ffb92e);
+    color: #05060b;
+    border-color: transparent;
+}
+
+/* 海报区域比首页稍大一点 */
+.popular-poster-wrapper {
+    flex: 1;
+    max-height: 280px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.popular-poster-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 文本部分 */
+.popular-card-body {
+    margin-top: 2px;
+}
+
+.popular-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    min-height: 36px;  /* 两行标题高度，防止卡片参差不齐 */
+}
+
+.popular-meta {
+    margin-top: 3px;
+    font-size: 11px;
+    color: rgba(245, 245, 247, 0.7);
+}
+
+.popular-meta-item {
+    margin-right: 8px;
+}
+
+.popular-meta-score {
+    color: #ffb92e;
+}
+
+/* 类型小标签 */
+.popular-genres {
+    margin-top: 4px;
+}
+
+.popular-genre-chip {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background-color: #1b2030;
+    color: rgba(245, 245, 247, 0.75);
+    margin-right: 4px;
+    margin-bottom: 2px;
+}
+
+
+
+/* 小标题 */
+.section-title {
+    font-size: 18px;
+    margin: 10px 0 18px 0;
+}
+
+/* 首页电影卡片区域 */
+.movie-grid {
+    margin-top: 10px;
+}
+
+/* 单个电影卡片 */
+.movie-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-card {
+    background-color: #11151f;
+    border-radius: 14px;
+    padding: 10px 10px 12px 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+    /* 关键：让卡片内部用 flex 垂直排版，高度更一致 */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.movie-poster-wrapper {
+    flex: 1;               /* 海报区域自动撑满上部分 */
+    max-height: 260px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-card-title {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.4;
+    min-height: 38px;
+}
+
+
+.movie-card-rating {
+    font-size: 12px;
+    color: #ffb92e;
+}
+
+/* 分页 */
+.home-pagination {
+    margin-top: 10px;
+}
+
+/* Pagination style for dark theme */
+.home-pagination .pagination {
+    margin: 15px 0;
+}
+
+.home-pagination .pagination > li > a,
+.home-pagination .pagination > li > span {
+    background-color: #11151f;
+    border-color: #272b3a;
+    color: #f5f5f7;
+}
+
+.home-pagination .pagination > li > a:hover,
+.home-pagination .pagination > li > span:hover {
+    background-color: #1d2232;
+    border-color: #3a425a;
+    color: #ffb92e;
+}
+
+.home-pagination .pagination > .active > a,
+.home-pagination .pagination > .active > span,
+.home-pagination .pagination > .active > a:hover,
+.home-pagination .pagination > .active > span:hover {
+    background-color: #3166a8;
+    border-color: #3166a8;
+    color: #ffffff;
+}
+
+.home-pagination .pagination > .disabled > span,
+.home-pagination .pagination > .disabled > span:hover,
+.home-pagination .pagination > .disabled > a,
+.home-pagination .pagination > .disabled > a:hover {
+    background-color: #121622;
+    border-color: #272b3a;
+    color: rgba(245, 245, 247, 0.4);
+    cursor: default;
+}
+
+/* ===== Popular Top3 section ===== */
+.popular-top3 {
+    max-width: 1100px;
+    margin: 8px auto 20px auto;
+}
+
+.popular-top3-link {
+    text-decoration: none;
+}
+
+.popular-top3-card {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background: radial-gradient(circle at top left, #1f2436, #070814);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+    padding: 12px 12px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.popular-top3-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95);
+}
+
+.popular-top3-rank-badge {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    background: linear-gradient(135deg, #e50914, #ffb92e);
+    color: #05060b;
+    font-weight: 600;
+}
+
+.popular-top3-score-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    background-color: rgba(4, 7, 20, 0.9);
+    border: 1px solid rgba(255, 185, 46, 0.8);
+    color: #ffb92e;
+}
+
+.popular-top3-poster {
+    border-radius: 16px;
+    overflow: hidden;
+    max-height: 280px;
+    margin-bottom: 10px;
+}
+
+.popular-top3-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.popular-top3-body {
+    padding: 0 2px;
+}
+
+.popular-top3-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.popular-top3-meta {
+    font-size: 12px;
+    color: rgba(245, 245, 247, 0.78);
+    margin-bottom: 4px;
+}
+
+.popular-top3-genres {
+    font-size: 11px;
+}
+
+/* 原来的小卡片 popular-card / popular-genre-chip 可以沿用之前写好的 */
+
+@media (max-width: 768px) {
+    .popular-top3-card {
+        margin-bottom: 12px;
+    }
+}
+
+/* 标题区域整体 */
+.popular-header {
+    max-width: 1100px;
+    margin: 0 auto 10px auto;
+}
+
+/* 标题行：左边主标题 + 右边排序提示 */
+.popular-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+}
+
+/* 左侧主标题组合 */
+.popular-title-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 小圆图标 */
+.popular-title-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 20%, #ffb92e, #e50914);
+    color: #05060b;
+    font-size: 15px;
+    box-shadow: 0 0 18px rgba(229, 9, 20, 0.55);
+}
+
+/* 主标题文字 */
+.popular-title-text {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+/* “Top 100 list” 徽章 */
+.popular-title-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 185, 46, 0.8);
+    color: #ffb92e;
+    background: rgba(9, 10, 20, 0.9);
+}
+
+/* 右侧排序提示 */
+.popular-sort-hint {
+    font-size: 11px;
+    color: rgba(245, 245, 247, 0.65);
+    white-space: nowrap;
+}
+
+.popular-sort-hint span {
+    color: #ffb92e;
+}
+
+/* 副标题保持原来的样式，可稍微调一下与上面的间距 */
+.popular-subtitle {
+    font-size: 13px;
+    color: rgba(245, 245, 247, 0.75);
+    margin-bottom: 6px;
+}
+
+/* 小屏幕适配：标题行折行 */
+@media (max-width: 768px) {
+    .popular-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .popular-sort-hint {
+        white-space: normal;
+    }
+
+    .popular-title-text {
+        font-size: 20px;
+    }
+}
+
+/* ===== Category page ===== */
+
+.category-page {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* 顶部标题区 */
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    margin: 0 0 12px 0;
+}
+
+.category-title {
+    font-size: 22px;
+    margin: 0;
+}
+
+.category-subtitle {
+    font-size: 13px;
+    color: rgba(245, 245, 247, 0.75);
+    margin: 4px 0 0 0;
+}
+
+.category-subtitle span {
+    font-weight: 500;
+}
+
+.category-highlight {
+    color: #ffb92e;
+}
+
+/* 右侧 sort 栏 */
+.category-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: rgba(245, 245, 247, 0.68);
+}
+
+.category-sort-label {
+    margin-right: 4px;
+}
+
+.category-sort-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid #3a425a;
+    background-color: #090b14;
+    color: rgba(245, 245, 247, 0.8);
+    cursor: default;
+}
+
+.category-sort-pill-active {
+    border-color: #ffb92e;
+    color: #ffb92e;
+}
+
+/* 左右布局 */
+.category-layout {
+    display: flex;
+    gap: 24px;
+}
+
+/* 左侧 sidebar */
+.category-sidebar {
+    width: 210px;
+    flex-shrink: 0;
+    background-color: #10131f;
+    border-radius: 18px;
+    padding: 12px 12px 14px 12px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+}
+
+.category-sidebar-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(245, 245, 247, 0.7);
+    margin-bottom: 8px;
+}
+
+.category-genre-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.category-genre-list li + li {
+    margin-top: 4px;
+}
+
+.category-genre-link {
+    display: block;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: rgba(245, 245, 247, 0.8);
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.category-genre-link:hover {
+    background-color: #1b2235;
+}
+
+.category-genre-link.is-active {
+    background: linear-gradient(135deg, #e50914, #ffb92e);
+    color: #05060b;
+}
+
+/* 右侧主内容 */
+.category-main {
+    flex: 1;
+}
+
+.category-main-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 10px 0;
+}
+
+.category-empty {
+    font-size: 13px;
+    color: rgba(245, 245, 247, 0.7);
+}
+
+/* 小屏幕适配：sidebar 变成横向滑动 */
+@media (max-width: 768px) {
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .category-layout {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .category-sidebar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .category-genre-list {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        max-height: none;
+    }
+
+    .category-genre-list li {
+        margin-right: 8px;
+        margin-top: 0;
+    }
+}
+
+/* ============ NAVBAR（唯一版本） ============ */
+
+/* 导航整体：深红渐变 + 阴影 */
+.movie-navbar {
+    border-radius: 0;
+    border: none;
+    background: linear-gradient(90deg, #2b0509, #5b0016);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+    min-height: 56px; /* 比默认略高一点 */
+}
+
+/* 品牌（左侧标题） */
+.movie-navbar .navbar-brand.movie-brand {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    line-height: 20px;
+    color: #ffffff !important;
+}
+
+.movie-navbar .navbar-brand.movie-brand:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+}
+
+/* 中间菜单 Home / Popular / Categories */
+.movie-navbar .navbar-nav > li > a {
+    font-size: 15px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    line-height: 20px;            /* 和品牌一致 */
+    color: rgba(255, 255, 255, 0.78) !important;
+    border-radius: 999px;
+    margin: 0 2px;
+    transition: background 0.16s ease-out, color 0.16s ease-out;
+}
+
+.movie-navbar .navbar-nav > li > a:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
+
+/* 当前 active 项（如果模板里加了 active 类的话） */
+.movie-navbar .navbar-nav > li.active > a,
+.movie-navbar .navbar-nav > li.active > a:hover,
+.movie-navbar .navbar-nav > li.active > a:focus {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+}
+
+/* 搜索表单整体：垂直居中即可 */
+.movie-navbar .navbar-form {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 24px;
+}
+
+/* 搜索输入框：圆角 + 玻璃风 */
+.movie-search-input {
+    height: 34px;
+    min-width: 260px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.movie-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 搜索按钮 */
+.movie-search-btn {
+    height: 34px;
+    border-radius: 999px;
+    border: none;
+    padding: 6px 18px;
+    margin-left: 4px;
+    background: #ffffff;
+    color: #222222;
+    font-weight: 600;
+    transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+}
+
+.movie-search-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* 右侧 Sign up / Log in / Rating history */
+.movie-navbar .navbar-right > li > a {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85) !important;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    line-height: 20px;
+}
+
+/* Log in 做成圆角边框，只改左右 padding，保持与 Sign up 同高 */
+.movie-navbar .navbar-nav.navbar-right > li:last-child > a {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding-left: 18px;   /* 只写左右，继承上面的 padding-top/bottom */
+    padding-right: 18px;
+    margin-left: 4px;
+}
+
+
+.movie-navbar .navbar-right > li:last-child > a:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* Rating history 的 btn-group （登录状态下） */
+.movie-navbar .btn-group.navbar-btn .btn-info {
+    background: #4fb4de;
+    border: none;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 6px 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.55);
+}
+
+.movie-navbar .btn-group.navbar-btn .btn-info:hover,
+.movie-navbar .btn-group.navbar-btn .btn-info:focus {
+    background: #39a2d2;
+}
+
+/* 小屏幕下导航收起时的搜索条 */
+@media (max-width: 768px) {
+    .movie-navbar .navbar-form {
+        float: none !important;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        margin: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    }
+
+    .movie-search-input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .movie-search-btn {
+        width: 100%;
+        margin: 6px 0 0;
+    }
+}
+
+/* 右上角 Sign up / Log in 的统一垂直对齐 */
+.movie-navbar .navbar-nav.navbar-right > li > a {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    line-height: 20px;
+}
+
+/* ===== Home announcements ===== */
+.home-announcement {
+    max-width: 1100px;
+    margin: 10px auto 20px auto;
+}
+
+.home-announcement-card {
+    background: #11151f;
+    border-radius: 16px;
+    padding: 12px 16px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.home-announcement-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.home-announcement-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(245, 245, 247, 0.7);
+}
+
+.home-announcement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.home-announcement-item + .home-announcement-item {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.home-announcement-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.home-announcement-title {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.home-announcement-date {
+    font-size: 11px;
+    color: rgba(245, 245, 247, 0.6);
+}
+
+.home-announcement-content {
+    font-size: 13px;
+    color: rgba(245, 245, 247, 0.8);
+    margin-bottom: 0;
+}
+
+
+
+
+

@@ -1,0 +1,70 @@
+/* 整体网格：大屏下 6 列，18 个就是 3 行 */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-gap: 24px 20px; /* 行间距 / 列间距 */
+    margin-top: 16px;
+}
+
+/* 中等屏幕时：4 列 */
+@media (max-width: 1200px) {
+    .movie-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* 平板：3 列 */
+@media (max-width: 992px) {
+    .movie-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* 手机：2 列 */
+@media (max-width: 768px) {
+    .movie-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.movie-card-wrapper {
+    /* 让卡片高度自适应 */
+}
+
+.movie-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.movie-card {
+    background: #10131a;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.6);
+}
+
+.movie-poster-wrapper img {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.movie-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 8px 10px 4px;
+    color: #f5f5f5;
+    line-height: 1.4;
+}
+
+.movie-card-rating {
+    font-size: 12px;
+    margin: 0 10px 10px;
+    color: #fbbc04;
+}

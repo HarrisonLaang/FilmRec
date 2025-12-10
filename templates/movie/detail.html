@@ -1,0 +1,198 @@
+{% extends 'movie/base.html' %}
+{% load static %}
+
+{# 详情页专用 CSS #}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/star-rating.css' %}">
+{% endblock %}
+
+{# 星级评分插件 JS + 初始化 #}
+{% block extra_js %}
+    <script src="{% static 'js/star-rating.js' %}"></script>
+    <script>
+        (function ($) {
+            $(function () {
+                // 初始化评分插件
+                $("#rating-input").rating();
+            });
+        })(jQuery);
+    </script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container detail-page">
+
+    {# 顶部：海报 + 信息 + 右侧评分卡片 #}
+    <section class="detail-hero">
+
+        <div class="detail-hero-left">
+
+            <!-- 海报 -->
+            <div class="detail-poster-large">
+                <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                     alt="{{ movie.name }}">
+            </div>
+
+            <!-- 电影信息 -->
+            <div class="detail-info">
+                <div class="detail-badge">Movie detail</div>
+
+                <h1 class="detail-title">
+                    {{ movie.name }}
+                </h1>
+
+                <div class="detail-meta">
+                    <span class="detail-score-pill">
+                        <span class="star">★</span>{{ movie.get_score }}
+                    </span>
+
+                    {% if movie.release_time %}
+                        <span>{{ movie.release_time }}</span>
+                    {% endif %}
+
+                    {% if movie.time %}
+                        <span>• {{ movie.time }}</span>
+                    {% endif %}
+
+                    {% if movie.get_score_int_range %}
+                        <span class="detail-hearts">
+                            {% for _ in movie.get_score_int_range %}❤{% endfor %}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="detail-genres">
+                    {% for g in movie.get_genre %}
+                        <a href="{% url 'movie:tag' %}?genre={{ g }}" class="detail-genre-pill">
+                            {{ g }}
+                        </a>
+                    {% empty %}
+                        <span class="detail-genre-pill">Unknown</span>
+                    {% endfor %}
+                </div>
+
+                {% if movie.intro %}
+                    <p class="detail-intro">
+                        {{ movie.intro }}
+                    </p>
+                {% endif %}
+
+                <div class="detail-credits">
+                    {% if movie.director %}
+                        <div class="detail-credits-row">
+                            <div class="detail-credits-label">Director</div>
+                            <div class="detail-credits-value">{{ movie.director }}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if movie.writers %}
+                        <div class="detail-credits-row">
+                            <div class="detail-credits-label">Writer</div>
+                            <div class="detail-credits-value">{{ movie.writers }}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if movie.actors %}
+                        <div class="detail-credits-row">
+                            <div class="detail-credits-label">Cast</div>
+                            <div class="detail-credits-value">{{ movie.actors }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# 右侧：评分 / 评论卡片 #}
+        <aside class="detail-hero-side">
+            <div>
+                <div class="detail-rating-title">Your rating</div>
+                <div class="detail-rating-subtitle">
+                    Average score: <span class="detail-rating-average">{{ movie.get_score }}</span>
+                    <span class="detail-rating-average-label"> / 5</span>
+                </div>
+
+                {% if not login %}
+                    <p class="detail-login-hint">
+                        Log in to rate and write a review.
+                        <a href="{% url 'movie:login' %}">Log in</a>
+                    </p>
+                {% endif %}
+            </div>
+
+            {% if login %}
+                <form class="detail-rating-form" action="" method="post">
+                    {% csrf_token %}
+                    <input id="rating-input"
+                           name="score"
+                           value="{{ score }}"
+                           type="number"
+                           class="rating"
+                           min="0"
+                           max="5"
+                           step="0.5"
+                           data-stars="5"
+                           data-symbol="&#xe005;"
+                           data-default-caption="{rating} hearts"
+                           data-star-captions="{}">
+
+                    <label for="comment" style="margin-top:10px;font-size:13px;">Comment</label>
+                    <textarea class="form-control"
+                              name="comment"
+                              rows="4"
+                              id="comment">{{ comment }}</textarea>
+
+                    <div class="detail-rating-buttons">
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="reset" class="btn btn-default btn-sm">Clear</button>
+                    </div>
+                </form>
+            {% endif %}
+        </aside>
+
+    </section>
+
+    {# 相似电影区域 #}
+    <section class="detail-section">
+        <div class="detail-section-header">
+            <h2 class="detail-section-title">People who liked this movie also liked</h2>
+            <p class="detail-section-subtitle">
+                Based on similarity between movies.
+            </p>
+        </div>
+
+        <div class="detail-recommendations">
+            {% for m in similarity_movies %}
+                <a href="{% url 'movie:detail' m.pk %}" class="detail-rec-card">
+                    <div class="detail-rec-poster-wrapper">
+                        <img src="{% static 'movie/poster/' %}{{ m.imdb_id }}.jpg"
+                             alt="{{ m.name }}">
+                    </div>
+                    <div class="detail-rec-title">
+                        {{ m.name }}
+                    </div>
+                    <div class="detail-rec-rating">
+                        ★ {{ m.get_score }}
+                    </div>
+                </a>
+            {% empty %}
+                <p class="detail-empty">
+                    Not enough data to show related titles yet.
+                </p>
+            {% endfor %}
+        </div>
+    </section>
+
+    {# 消息提示区域（messages） #}
+    <section class="detail-messages">
+        {% for message in messages %}
+            {% if message.tags == 'info' %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    </section>
+
+</div>
+
+{% endblock %}

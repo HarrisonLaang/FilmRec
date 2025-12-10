@@ -1,0 +1,153 @@
+{% extends "movie/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+    <!-- 顶部说明 -->
+    <section class="popular-header">
+        <div class="popular-title-row">
+            <div class="popular-title-main">
+                <span class="popular-title-icon">★</span>
+                <h1 class="popular-title-text">Top rated movies</h1>
+                <span class="popular-title-badge">Top 100 list</span>
+            </div>
+    
+            <div class="popular-sort-hint">
+                Sorted by <span>average score</span> and <span>number of ratings</span>
+            </div>
+        </div>
+    
+        <p class="popular-subtitle">
+            A ranking of the most popular movies on this site, based on user ratings.
+            Titles are sorted by average score and number of ratings.
+        </p>
+    </section>
+
+    <!-- 小说明行 -->
+    <section class="popular-legend">
+        <span class="popular-pill popular-pill-top3">Top 3 highlighted</span>
+        <span class="popular-pill">Score ≥ 4.0</span>
+        <span class="popular-pill">At least 50 ratings</span>
+    </section>
+
+    <!-- Top 3 大卡片 -->
+    <section class="popular-top3">
+        <div class="row">
+            {% for movie in movies|slice:":3" %}
+                <div class="col-sm-4">
+                    <a href="{% url 'movie:detail' movie.pk %}" class="popular-top3-link">
+                        <div class="popular-top3-card">
+                            <div class="popular-top3-rank-badge">
+                                #{{ forloop.counter }}
+                            </div>
+                            <div class="popular-top3-score-badge">
+                                ★ {{ movie.get_score }}
+                            </div>
+
+                            <div class="popular-top3-poster">
+                                <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                                     alt="{{ movie.name }}">
+                            </div>
+
+                            <div class="popular-top3-body">
+                                <div class="popular-top3-title" title="{{ movie.name }}">
+                                    {{ movie.name }}
+                                </div>
+                                <div class="popular-top3-meta">
+                                    {{ movie.release_time }}
+                                </div>
+                                <div class="popular-top3-genres">
+                                    {% for g in movie.genre.all|slice:":3" %}
+                                        <span class="popular-genre-chip">{{ g.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- 排名 4 以后的小卡片网格 -->
+    <section>
+        <div class="row popular-grid">
+            {% for movie in movies|slice:"3:" %}
+                <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="popular-card">
+                        <div class="popular-rank-badge">
+                            #{{ forloop.counter|add:"3" }}
+                        </div>
+
+                        <a href="{% url 'movie:detail' movie.pk %}" class="movie-card-link">
+                            <div class="popular-poster-wrapper">
+                                <img src="{% static 'movie/poster/' %}{{ movie.imdb_id }}.jpg"
+                                     alt="{{ movie.name }}">
+                            </div>
+                        </a>
+
+                        <div class="popular-card-body">
+                            <div class="popular-card-title" title="{{ movie.name }}">
+                                {{ movie.name }}
+                            </div>
+                            <div class="popular-meta">
+                                <span class="popular-meta-item">
+                                    {{ movie.release_time }}
+                                </span>
+                                <span class="popular-meta-item popular-meta-score">
+                                    ★ {{ movie.get_score }}
+                                </span>
+                            </div>
+
+                            <div class="popular-genres">
+                                {% for g in movie.genre.all|slice:":2" %}
+                                    <span class="popular-genre-chip">{{ g.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- 分页：保持你原来的逻辑 -->
+    <nav class="text-center home-pagination">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li><a href="{% url 'movie:hot' %}?p={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+                <li class="disabled"><a href="javascript:void(0);">Previous</a></li>
+            {% endif %}
+
+            {% if left_has_more %}
+                <li><a href="{% url 'movie:hot' %}?p=1">1</a></li>
+                <li><a href="javascript:void(0)">...</a></li>
+            {% endif %}
+
+            {% for left_page in left_pages %}
+                <li><a href="{% url 'movie:hot' %}?p={{ left_page }}">{{ left_page }}</a></li>
+            {% endfor %}
+
+            <li class="active"><a href="javascript:void(0);">{{ current_page }}</a></li>
+
+            {% for right_page in right_pages %}
+                <li><a href="{% url 'movie:hot' %}?p={{ right_page }}">{{ right_page }}</a></li>
+            {% endfor %}
+
+            {% if right_has_more %}
+                <li><a href="javascript:void(0);">...</a></li>
+                <li><a href="{% url 'movie:hot' %}?p={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <li><a href="{% url 'movie:hot' %}?p={{ page_obj.next_page_number }}">Next</a></li>
+            {% else %}
+                <li class="disabled"><a href="javascript:void(0);">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>
+{% endblock %}
